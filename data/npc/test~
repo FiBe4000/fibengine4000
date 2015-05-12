@@ -1,0 +1,5 @@
+TileSet: "gfx/npcSet.png"
+Behavior: "data/behavior/test"
+Width: 13
+Height: 18
+Dialogue: "data/dialogue/test"

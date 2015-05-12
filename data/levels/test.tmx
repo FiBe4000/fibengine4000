@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Poke" tilewidth="32" tileheight="32">
+  <image source="../../gfx/tileset2.png" width="704" height="320"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYMKCGdEwPjl0dfjkycG+QOyBhs2wqHMCYi00HIBHXQEQFxKhjpB51MQAKoAGNQ==
+  </data>
+ </layer>
+</map>
