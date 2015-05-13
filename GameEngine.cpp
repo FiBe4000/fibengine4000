@@ -4,6 +4,8 @@
 
 GameEngine GameEngine::gEngine;
 
+//Test
+
 GameEngine::GameEngine() : Running(false)
 {
     App.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "gEngine");//, sf::Style::Fullscreen);
@@ -33,7 +35,7 @@ void GameEngine::Run()
     while(Running)
     {
     	frameClock.restart();
-    	
+
         if(changeState)
         {
         	std::cerr << "Deleting " << state->p() << std::endl;
