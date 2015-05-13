@@ -1,0 +1,30 @@
+HistoryString: ""
+
+{
+	<l1> "I am Willy"
+
+	<r1> "Hi Willy"
+	<r2> "Don't talk to me!"
+
+	<l2-r1> "Who are you?"
+	<l2-r2> "Why so mean?"
+
+	<r2-l2-r1> "I am your father."
+	<r3-l2-r1> "I used to be an adventurer."
+
+	<r2-l2-r2> "Because I hate you..."
+	<r3-l2-r2> "Because I don't think you deserve my attention."
+
+	<l3-r2-l2-r1> "Oh, hi dad!"
+	<l3-r3-l2-r1> "Really?"
+
+	<l3-r2-l2-r2> "I see..."
+	<l3-r3-l2-r2> "I see..."
+
+	<repeat-l3-r2-l2-r1> "Hi dad!"
+	<repeat-l3-r3-l2-r1> "Adventurer... pfft."
+
+	<repeat-l3-r2-l2-r2> "Please leave me alone."
+	<repeat-l3-r3-l2-r2> "Please leave me alone."
+}
+
