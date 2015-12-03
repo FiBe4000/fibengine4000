@@ -37,7 +37,6 @@ Intro::~Intro()
 
 void Intro::Update()
 {
-	std::cerr << "Intro: update" << std::endl;
 	introTxt.setColor(sf::Color(255, 255, 255, col));
 	
 	if(clk.getElapsedTime() >= sf::milliseconds(10))
@@ -51,6 +50,7 @@ void Intro::Update()
 		}
 		if(progress == 2)
 		{
+			std::cout << "INTRO DONE" << std::endl;
 			isDone = true;
 		}
 		
@@ -60,7 +60,6 @@ void Intro::Update()
 
 void Intro::Render()
 {
-	std::cerr << "Intro: render" << std::endl;
-	GameEngine::gEngine.App.draw(introTxt);
+	GameEngine::gEngine.FrameTexture.draw(introTxt);
 	//GameEngine::gEngine.App.draw(sprite);
 }

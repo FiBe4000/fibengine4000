@@ -5,8 +5,8 @@ Player::Player() : Character("gfx/characterSet.png")
 {
 	std::cerr << "Player created" << std::endl;
     direction = 2;
-    xSpeed = 2;
-    ySpeed = 2;
+    xSpeed = 120;
+    ySpeed = 120;
     id = "player";
 }
 
@@ -62,3 +62,14 @@ sf::String& Player::GetStatsString()
 {
 	return StatsString;
 }
+
+const float Player::GetPlayerXSpeed() const
+{
+	return xSpeed * GameEngine::gEngine.GetFrameTime();
+}
+
+const float Player::GetPlayerYSpeed() const 
+{
+	return ySpeed * GameEngine::gEngine.GetFrameTime();
+}
+

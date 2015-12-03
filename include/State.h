@@ -20,7 +20,7 @@ private:
 	bool GStateReq;
 	bool IStateReq;
 	bool MStateReq;
-
+				
 public:
     /*!
      \brief The sf::Event used by all states.

@@ -24,6 +24,8 @@ private:
     */
     Intro intro;
 	
+	sf::Sprite FrameSprite;
+	
 public:
     /*!
      \brief The constructor.

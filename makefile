@@ -8,17 +8,20 @@ SDIR = src
 LIBS =  -lsfml-graphics -lsfml-window -lsfml-system
 
 _DEPS = GameEngine.h AIManager.h Behavior.h Character.h \
-		Game.h GameState.h Intro.h IntroState.h Menu.h \
+		Game.h GameState.h Intro.h IntroState.h \
+		ActionTextObject.h \
+		MenuCursorObject.h MenuObject.h Menu.h \
 		MenuState.h NPC.h Player.h RandomWalking.h \
 		State.h Tilegrid.h Tile.h AnimatedSprite.h \
-		Animation.h pugiconfig.h pugixml.h
+		Animation.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = main.o AIManager.o Behavior.o Character.o GameEngine.o \
-	   Game.o GameState.o Intro.o IntroState.o Menu.o \
+	   Game.o GameState.o Intro.o IntroState.o ActionTextObject.o \
+	   MenuCursorObject.o MenuObject.o Menu.o \
 	   MenuState.o NPC.o Player.o RandomWalking.o \
 	   State.o Tilegrid.o Tile.o AnimatedSprite.o \
-	   Animation.o pugixml.o
+	   Animation.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(EXE): $(OBJ)

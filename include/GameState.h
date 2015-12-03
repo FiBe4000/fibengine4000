@@ -29,9 +29,7 @@ private:
      \brief The camera which handles the scrolling of the map.
     */
     sf::View GameView;
-    
-    sf::Clock frameClock;
-
+	sf::Sprite FrameSprite;
     /*!
      \brief An array of bools representing if a border is in the line-of-sight of the player.
     */

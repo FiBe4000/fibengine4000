@@ -1,0 +1,9 @@
+#ifndef DIRECTION_H_INCLUDED
+#define DIRECTION_H_INCLUDED
+
+enum Direction
+{
+	FORWARD, BACKWARD, NODIR
+};
+
+#endif //DIRECTION_H_INCLUDED

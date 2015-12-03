@@ -44,8 +44,8 @@ public:
     const float GetX() const { return position.x; }
 	const float GetY() const { return position.y; }
 	
-	const float GetXSpeed() const { return xSpeed; }
-	const float GetYSpeed() const { return ySpeed; }
+	float GetXSpeed();
+	float GetYSpeed();
 	
 	const int GetWidth() { return width; }
 	const int GetHeight() { return height; }

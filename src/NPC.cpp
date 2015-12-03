@@ -8,8 +8,8 @@ NPC::NPC(float x, float y, std::string id, float stress) : Character("gfx/npcSet
     LoadNpcFile();
     
     direction = LEFT;
-    xSpeed = 2;
-    ySpeed = 2;
+    xSpeed = 120;
+    ySpeed = 120;
     maxDistX = 100;
     maxDistY = 100;
     width = 13;
@@ -110,5 +110,15 @@ void NPC::AI(bool CanMove[])
 
 void NPC::LoadNpcFile()
 {
+}
+
+float NPC::GetXSpeed()
+{
+	return xSpeed * GameEngine::gEngine.GetFrameTime();
+}
+
+float NPC::GetYSpeed()
+{
+	return ySpeed * GameEngine::gEngine.GetFrameTime();
 }
 

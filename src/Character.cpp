@@ -83,11 +83,10 @@ void Character::moveDown(bool CanMove, float moveSpeed)
 	currentAnimation = &walkingAnimationDown;
 	animChar.play(*currentAnimation);
 	//movement = sf::Vector2f(0.f, 0.f);
-	//animChar.play(*currentAnimation);
 	
     if(CanMove)
     {
-        position.y += moveSpeed;
+        position.y += moveSpeed * GameEngine::gEngine.GetFrameTime();
         //movement.y += moveSpeed;
         Moving = true;
         //GetAnimation().move(position * FrameTime.asSeconds());
@@ -109,7 +108,7 @@ void Character::moveUp(bool CanMove, float moveSpeed)
 	
     if(CanMove)
     {
-        position.y -= moveSpeed;
+        position.y -= moveSpeed * GameEngine::gEngine.GetFrameTime();;
         //movement.y -= moveSpeed;
         Moving = true;
         //GetAnimation().move(position * FrameTime.asSeconds());
@@ -131,7 +130,7 @@ void Character::moveRight(bool CanMove, float moveSpeed)
 	
     if(CanMove)
     {
-        position.x += moveSpeed;
+        position.x += moveSpeed * GameEngine::gEngine.GetFrameTime();;
         //movement.x += moveSpeed;
         Moving = true;
         //GetAnimation().move(position * FrameTime.asSeconds());
@@ -153,7 +152,7 @@ void Character::moveLeft(bool CanMove, float moveSpeed)
 	
     if(CanMove)
     {
-        position.x -= moveSpeed;
+        position.x -= moveSpeed * GameEngine::gEngine.GetFrameTime();;
         //movement.x -= moveSpeed;
         Moving = true;
         //GetAnimation().move(position * FrameTime.asSeconds());

@@ -80,12 +80,12 @@ private:
     /*!
      \brief An integer representing the new x-axis position the player will get.
     */
-    int PlayerNewX;
+    float PlayerNewX;
 
     /*!
      \brief An integer representing the new y-axis position the player will get.
     */
-    int PlayerNewY;
+    float PlayerNewY;
 
     /*!
      \brief The time limit of the current level.
@@ -120,13 +120,13 @@ public:
      \brief Get the new x-axis position for the player.
      \return The new x-axis position for the player.
     */
-    const int GetNewX() const { return PlayerNewX; }
+    const float GetNewX() const { return PlayerNewX; }
 
     /*!
      \brief Get the new y-axis position for the player.
      \return The new y-axis position for the player.
     */
-    const int GetNewY() const { return PlayerNewY; }
+    const float GetNewY() const { return PlayerNewY; }
 
     /*!
      \brief The method used for the rendering of all tiles.

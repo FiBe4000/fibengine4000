@@ -37,11 +37,11 @@ void State::Process()
         GameEngine::gEngine.ChangeState(NewState);
     	GStateReq = false;
     }
-    if(F2KeyDown && !OldF2KeyDown)
+    if(F2KeyDown && !OldF2KeyDown || MStateReq)
     {
-    	std::cerr << "F2 key down" << std::endl;
-        //State* NewState=new LevelState();
-        //GameEngine::gEngine.ChangeState(NewState);
+        State* NewState=new MenuState();
+        GameEngine::gEngine.ChangeState(NewState);
+        GStateReq = false;
     }
     if((F3KeyDown && !OldF3KeyDown) || IStateReq)
     {
@@ -63,6 +63,7 @@ void State::Update()
 void State::Render()
 {
     GameEngine::gEngine.App.clear();
+    GameEngine::gEngine.FrameTexture.clear(sf::Color::Black);
 }
 
 void State::ReqStateChange(int state)

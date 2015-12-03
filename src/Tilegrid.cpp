@@ -43,7 +43,7 @@ void Tilegrid::Render(Player& player, bool NearBorder[])
 	int Ya = int( -0.5f+((float)player.GetY()-(float)GameEngine::WINDOW_HEIGHT/2)/(float)GameEngine::TILE_HEIGHT ) -extra_offsetYa;
 	int Yb = int( 0.5f+((float)player.GetY()+(float)GameEngine::WINDOW_HEIGHT/2)/(float)GameEngine::TILE_HEIGHT ) +extra_offsetYb;
 
-	// If the variables isn't in range, make them so.
+	// If the variables are not in range, make them so.
 	(Xa < 0) ? Xa=0 : 0;
 	(Xb > LevelWidth) ? Xb=LevelWidth : 0;
 	(Ya < 0) ? Ya=0 : 0;
@@ -56,7 +56,7 @@ void Tilegrid::Render(Player& player, bool NearBorder[])
 			// Set position
 			sprite.setPosition(sf::Vector2f(i*GameEngine::TILE_WIDTH, j*GameEngine::TILE_HEIGHT));
 			sprite.setTextureRect(level[j][i].GetRect());
-			GameEngine::gEngine.App.draw(sprite);
+			GameEngine::gEngine.FrameTexture.draw(sprite);
 		}
 	}
 	
@@ -71,7 +71,7 @@ void Tilegrid::Render(Player& player, bool NearBorder[])
 		
 		if(npcs.at(i)->GetX() >= NXa && npcs.at(i)->GetX() <= NXb && npcs.at(i)->GetY() >= NYa && npcs.at(i)->GetY() <= NYb)
 		{
-			GameEngine::gEngine.App.draw(npcs.at(i)->GetAnimation());
+			GameEngine::gEngine.FrameTexture.draw(npcs.at(i)->GetAnimation());
 		}
 	}
 }
@@ -369,7 +369,7 @@ void Tilegrid::LoadTilegrid(std::string FileName)
    	   	}
 
    	   	i += (end-start);
-   	   	PlayerNewX = atoi(digit);
+   	   	PlayerNewX = (float)atoi(digit);
    	}
 
    	for(int n=2; n>=0; n--)
@@ -397,7 +397,7 @@ void Tilegrid::LoadTilegrid(std::string FileName)
    	   	}
 
    	   	i += (end-start);
-   	   	PlayerNewY = atoi(digit);
+   	   	PlayerNewY = (float)atoi(digit);
    	}
 
    	for(int n=2; n>=0; n--)

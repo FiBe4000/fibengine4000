@@ -100,13 +100,13 @@ public:
      \brief Get the player x-axis speed.
      \return The x-axis speed.
     */
-    const float GetPlayerXSpeed() const { return xSpeed; }
+    const float GetPlayerXSpeed() const;
 
     /*!
      \brief Get the player y-axis speed.
      \return The y-axis speed.
     */
-    const float GetPlayerYSpeed() const { return ySpeed; }
+    const float GetPlayerYSpeed() const;
 	
 	const std::string GetId() { return id; }
 	

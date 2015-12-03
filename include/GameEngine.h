@@ -12,6 +12,7 @@
 #include <SFML/Audio.hpp>
 #include "GameState.h"
 #include "IntroState.h"
+#include "MenuState.h"
 #include <iostream>
 
 #define GAME_STATE 0
@@ -50,6 +51,7 @@ private:
     
     sf::Clock frameClock;
 	
+	float frameTime;
     /*!
      \brief This method is the main method used for running the game. It contains the main loop.
     */
@@ -139,7 +141,9 @@ public:
      \note While every class should be able to reach the window, through the static object gEngine, it is public.
     */
     sf::RenderWindow App;
-	
+    sf::RenderTexture FrameTexture;
+	sf::Shader PostFxShader;
+	sf::Clock shaderClock;
     /*!
      \brief This static object of the class itself is used to handle the game and to access the window.
      \note While every class should be able to reach this object, it is public.
