@@ -10,9 +10,11 @@ class MenuState : public State
 {
 private:
     Menu StartMenu;
-    
+
 	sf::Sprite FrameSprite;
-	
+    bool FadeIn;
+    bool FadeOut;
+
 public:
     MenuState();
 	virtual ~MenuState();

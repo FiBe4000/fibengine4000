@@ -21,7 +21,7 @@ Tilegrid::~Tilegrid()
 void Tilegrid::Render(Player& player, bool NearBorder[])
 {
 	//std::cerr << "Tilegrid: Render" << std::endl;
-	
+
 	// Calculate the tiles the player is within range, plus extra offsets.
 	int extra_offsetXa = 1;
 	int extra_offsetXb = 1;
@@ -54,21 +54,21 @@ void Tilegrid::Render(Player& player, bool NearBorder[])
 		for(int j=Ya; j<Yb; j++)
 		{
 			// Set position
-			sprite.setPosition(sf::Vector2f(i*GameEngine::TILE_WIDTH, j*GameEngine::TILE_HEIGHT));
+			sprite.setPosition(sf::Vector2f(float(i*GameEngine::TILE_WIDTH), float(j*GameEngine::TILE_HEIGHT)));
 			sprite.setTextureRect(level[j][i].GetRect());
 			GameEngine::gEngine.FrameTexture.draw(sprite);
 		}
 	}
-	
+
 	for(int i=0; i<npcs.size(); i++)
 	{
-		
+
 		int NXa = int(-0.5f+((float)player.GetX()-(float)GameEngine::WINDOW_WIDTH/2)) - extra_offsetXa * GameEngine::TILE_WIDTH;
 		int NXb = int(0.5f+((float)player.GetX()+(float)GameEngine::WINDOW_WIDTH/2)) + extra_offsetXb * GameEngine::TILE_WIDTH;
 
 		int NYa = int(-0.5f+((float)player.GetY()-(float)GameEngine::WINDOW_HEIGHT/2)) - extra_offsetYa * GameEngine::TILE_HEIGHT;
 		int NYb = int(0.5f+((float)player.GetY()+(float)GameEngine::WINDOW_HEIGHT/2)) + extra_offsetYb * GameEngine::TILE_HEIGHT;
-		
+
 		if(npcs.at(i)->GetX() >= NXa && npcs.at(i)->GetX() <= NXb && npcs.at(i)->GetY() >= NYa && npcs.at(i)->GetY() <= NYb)
 		{
 			GameEngine::gEngine.FrameTexture.draw(npcs.at(i)->GetAnimation());
@@ -82,7 +82,7 @@ bool Tilegrid::IsAccessible(int x, int y, int width, int height, std::string id)
 	float pY = player.GetY();
 	int pWidth = GameEngine::PLAYER_WIDTH;
 	int pHeight = GameEngine::PLAYER_HEIGHT;
-	
+
     if(x<0 || y<0 || y>GameEngine::TILE_HEIGHT*LevelHeight-height-1 || x>GameEngine::GameEngine::TILE_WIDTH*LevelWidth-width-1)
     {
         return false;
@@ -115,7 +115,7 @@ bool Tilegrid::IsAccessible(int x, int y, int width, int height, std::string id)
     	//std::cerr << "Upp" << std::endl;
         return false;
     }
-	
+
 	if(((x+width >= pX && x+width <= pX+pWidth) || (x >= pX && x <= pX+pWidth)) && id != "player")
 	{
 		if((y >= pY && y <= pY+pHeight) || (y+height >= pY && y+height <= pY+pHeight))
@@ -123,23 +123,23 @@ bool Tilegrid::IsAccessible(int x, int y, int width, int height, std::string id)
 			return false;
 		}
 	}
-	
+
 	for(int i=0; i<npcs.size(); i++)
 	{
 		float npcX = npcs.at(i)->GetX();
 		float npcY = npcs.at(i)->GetY();
 		int npcWidth = npcs.at(i)->GetWidth();
 		int npcHeight = npcs.at(i)->GetHeight();
-	
+
 		if(((x+width >= npcX && x+width <= npcX+npcWidth) || (x >= npcX && x <= npcX+npcWidth)) && id != npcs.at(i)->GetId())
 		{
 			if((y >= npcY && y <= npcY+npcHeight) || (y+height >= npcY && y+height <= npcY+npcHeight))
 			{
 				return false;
 			}
-		}	
+		}
 	}
-	
+
     return true;
 }
 
@@ -150,27 +150,27 @@ sf::String& Tilegrid::GetTimeString()
 void Tilegrid::UpdateTilegrid(float x, float y)
 {
 	std::string tempStr = "";
-	
+
 	if(!level[int((y+15)/GameEngine::TILE_HEIGHT)][int(x/GameEngine::TILE_WIDTH)].GetFileName().empty())
 	{
 		tempStr = level[int((y+15)/GameEngine::TILE_HEIGHT)][int(x/GameEngine::TILE_WIDTH)].GetFileName();
-	} 
-	
+	}
+
 	if(!level[int((y+GameEngine::PLAYER_HEIGHT)/GameEngine::TILE_HEIGHT)][int((x+GameEngine::PLAYER_WIDTH)/GameEngine::TILE_WIDTH)].GetFileName().empty())
 	{
 		tempStr = level[int((y+GameEngine::PLAYER_HEIGHT)/GameEngine::TILE_HEIGHT)][int((x+GameEngine::PLAYER_WIDTH)/GameEngine::TILE_WIDTH)].GetFileName();
 	}
-	
+
 	if(!level[int((y+GameEngine::PLAYER_HEIGHT)/GameEngine::TILE_HEIGHT)][int(x/GameEngine::TILE_WIDTH)].GetFileName().empty())
 	{
 		tempStr = level[int((y+GameEngine::PLAYER_HEIGHT)/GameEngine::TILE_HEIGHT)][int(x/GameEngine::TILE_WIDTH)].GetFileName();
 	}
-	
+
 	if(!level[int((y+15)/GameEngine::TILE_HEIGHT)][int((x+GameEngine::PLAYER_WIDTH)/GameEngine::TILE_WIDTH)].GetFileName().empty())
 	{
 		tempStr = level[int((y+15)/GameEngine::TILE_HEIGHT)][int((x+GameEngine::PLAYER_WIDTH)/GameEngine::TILE_WIDTH)].GetFileName();
 	}
-	
+
 	if(!tempStr.empty() || (int(LevelTime.getElapsedTime().asSeconds()) >= TimeLimit) && TimeLimit != 0)
 	{
 		int tt = int(LevelTime.getElapsedTime().asSeconds());
@@ -180,18 +180,18 @@ void Tilegrid::UpdateTilegrid(float x, float y)
 			std::cerr << "Dead" << std::endl;
 			char fileName[80] = "";
 			int j;
-			
+
 			for(j=0; j<currentLevel.substr(6, currentLevel.length()).length(); j++)
-			{	
+			{
 				fileName[j] = currentLevel.substr(6, currentLevel.length()).at(j);
 			}
 			fileName[j] = '\0';
 			std::cerr << fileName << std::endl;
 			for(int i=0; i<LevelHeight; i++)
-			{		
+			{
 				level.at(i).clear();
-			}	
-			
+			}
+
 			isNewLevel = true;
 			isPlayerDead = true;
 			level.clear();
@@ -202,7 +202,7 @@ void Tilegrid::UpdateTilegrid(float x, float y)
 		{
 			char fileName[80] = "";
 			int j;
-			
+
 			for(j=0; j<tempStr.substr(6, tempStr.length()).length(); j++)
 			{
 				fileName[j] = tempStr.substr(6, tempStr.length()).at(j);
@@ -210,10 +210,10 @@ void Tilegrid::UpdateTilegrid(float x, float y)
 			fileName[j] = '\0';
 
 			for(int i=0; i<LevelHeight; i++)
-			{	
+			{
 				level.at(i).clear();
 			}
-			
+
 			isNewLevel = true;
 			level.clear();
 			currentLevel = tempStr;
@@ -285,13 +285,13 @@ void Tilegrid::LoadTilegrid(std::string FileName)
 			i++;
 		}
    	}
-	
+
 	if(!TileSet.loadFromFile(tileSet))
    	{
    		std::cerr << tileSet << " not found." << std::endl;
    		GameEngine::Stop();
    	}
-	
+
    	{
    		int start = i;
    		while(!isdigit(infoC[start]))
@@ -526,7 +526,7 @@ void Tilegrid::LoadTilegrid(std::string FileName)
    	sprite.setTexture(TileSet);
 
    	inFile.close();
-   	
+
    	SpawnNPCs();
 }
 
@@ -534,25 +534,25 @@ void Tilegrid::SpawnNPCs()
 {
 	std::string tempStr;
 	std::stringstream id;
-	
+
 	DeleteNPCs();
-			
+
 	for(int x=0; x<LevelWidth; x++)
 	{
 		for(int y=0; y<LevelHeight; y++)
-		{	
+		{
 			tempStr = level[y][x].GetFileName();
-			
+
 			if(tempStr.length() > 6 && tempStr.substr(0,5) == "Spawn" && tempStr.substr(6, 3) == "npc")
 			{
 				std::string spawnString;
-				
+
 				id.str(std::string());
 				id << npcs.size();
-				
+
 				spawnString = tempStr.substr(12, tempStr.length());
 				NPC* tmpNPC = new NPC(x*GameEngine::TILE_WIDTH, y*GameEngine::TILE_HEIGHT, id.str(), 1.0f);
-				
+
 				npcs.push_back(tmpNPC);
 			}
 		}
@@ -560,7 +560,7 @@ void Tilegrid::SpawnNPCs()
 }
 
 void Tilegrid::DeleteNPCs()
-{	
+{
 	for(int i=npcs.size()-1; i>=0; i--)
 	{
 		delete npcs.at(i);
@@ -572,12 +572,12 @@ void Tilegrid::UpdateNPCs()
 {
 	for(int i=0; i<npcs.size(); i++)
 	{
-		bool CanMove[4] = {IsAccessible(npcs.at(i)->GetX(), npcs.at(i)->GetY() - npcs.at(i)->GetYSpeed(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()), 
-						   IsAccessible(npcs.at(i)->GetX() + npcs.at(i)->GetXSpeed(), npcs.at(i)->GetY(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()), 
-						   IsAccessible(npcs.at(i)->GetX(), npcs.at(i)->GetY() + npcs.at(i)->GetYSpeed(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()), 
+		bool CanMove[4] = {IsAccessible(npcs.at(i)->GetX(), npcs.at(i)->GetY() - npcs.at(i)->GetYSpeed(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()),
+						   IsAccessible(npcs.at(i)->GetX() + npcs.at(i)->GetXSpeed(), npcs.at(i)->GetY(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()),
+						   IsAccessible(npcs.at(i)->GetX(), npcs.at(i)->GetY() + npcs.at(i)->GetYSpeed(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId()),
 						   IsAccessible(npcs.at(i)->GetX() - npcs.at(i)->GetXSpeed(), npcs.at(i)->GetY(), npcs.at(i)->GetWidth(), npcs.at(i)->GetHeight(), npcs.at(i)->GetId())
 					      };
-		
+
 		npcs.at(i)->AI(CanMove);
 		npcs.at(i)->update();
 	}

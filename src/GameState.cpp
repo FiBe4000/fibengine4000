@@ -4,7 +4,7 @@
 GameState::GameState() : GameView(sf::FloatRect(0, 0, GameEngine::WINDOW_WIDTH, GameEngine::WINDOW_HEIGHT))
 {
     std::cerr << "Entering GameState" << std::endl;
-		
+
 	game.GetPlayer().SetX(game.GetTilegrid().GetNewX());
 	game.GetPlayer().SetY(game.GetTilegrid().GetNewY());
 	//game.GetPlayer().GetAnimated().SetPosition(game.GetPlayer().GetX(), game.GetPlayer().GetY());
@@ -12,8 +12,9 @@ GameState::GameState() : GameView(sf::FloatRect(0, 0, GameEngine::WINDOW_WIDTH, 
 	GameView.setCenter(game.GetPlayer().GetX(), game.GetPlayer().GetY());
 	GameEngine::gEngine.FrameTexture.setView(GameView);
 	GameEngine::gEngine.App.setView(GameEngine::gEngine.FrameTexture.getDefaultView());
-	
+
 	Paused = false;
+	FirstEntry = true;
 }
 
 GameState::~GameState()
@@ -32,7 +33,7 @@ void GameState::Process()
     bool DownKeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::Down);
     bool LShiftKeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift);
     bool EKeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::E);
-	
+
 	if(!Paused && !IsNewLevel)
 	{
 		if(LeftKeyDown)
@@ -54,16 +55,16 @@ void GameState::Process()
 		else
 		    game.GetPlayer().stop();
     }
-    
+
     State::Process();
 }
 
 void GameState::Update()
 {
 	//std::cerr << "GameState: update" << std::endl;
-	
+
 	game.GetTilegrid().UpdateTilegrid(game.GetPlayer().GetX(), game.GetPlayer().GetY());
-		
+
 	IsNewLevel = game.GetTilegrid().IsNewLevel();
 	IsPlayerDead = game.GetTilegrid().IsPlayerDead();
 
@@ -195,30 +196,33 @@ void GameState::Update()
 	}
 }
 
-void GameState::Render() 
+void GameState::Render()
 {
-	if(IsNewLevel)
+	if(IsNewLevel || FirstEntry)
 	{
 		int opa = 0;
-		
+
 		sf::RectangleShape fadebox(sf::Vector2f(GameEngine::gEngine.FrameTexture.getSize().x*2, GameEngine::gEngine.FrameTexture.getSize().y*2));
 		fadebox.setFillColor(sf::Color(0,0,0,255));
 		GameEngine::gEngine.FrameTexture.setView(GameEngine::gEngine.FrameTexture.getDefaultView());
-		
-		while (opa <= 255)
-		{
-			fadebox.setFillColor(sf::Color(0,0,0, opa));
-			GameEngine::gEngine.FrameTexture.draw(fadebox);
-			GameEngine::gEngine.FrameTexture.display();
-			
-			//GameEngine::gEngine.PostFxShader.setParameter("timer", GameEngine::gEngine.shaderClock.getElapsedTime().asSeconds()*100);
-			FrameSprite.setTexture(GameEngine::gEngine.FrameTexture.getTexture());
-			GameEngine::gEngine.App.draw(FrameSprite, &GameEngine::gEngine.PostFxShader);
-			GameEngine::gEngine.App.display();
-			opa += 600 * GameEngine::gEngine.GetFrameTime();
-		}
+
+        if(!FirstEntry)
+        {
+            while (opa <= 255)
+            {
+                fadebox.setFillColor(sf::Color(0,0,0, opa));
+                GameEngine::gEngine.FrameTexture.draw(fadebox);
+                GameEngine::gEngine.FrameTexture.display();
+
+                //GameEngine::gEngine.PostFxShader.setParameter("timer", GameEngine::gEngine.shaderClock.getElapsedTime().asSeconds()*100);
+                FrameSprite.setTexture(GameEngine::gEngine.FrameTexture.getTexture());
+                GameEngine::gEngine.App.draw(FrameSprite, &GameEngine::gEngine.PostFxShader);
+                GameEngine::gEngine.App.display();
+                opa += 600 * GameEngine::gEngine.GetFrameTime();
+            }
+        }
 		opa = 255;
-		
+
 		while (opa >= 0)
 		{
 			State::Render();
@@ -226,27 +230,28 @@ void GameState::Render()
 			// Draw all tiles
 			game.GetTilegrid().Render(game.GetPlayer(), NearBorder);
 			GameEngine::gEngine.FrameTexture.draw(game.GetPlayer().GetAnimation());
-			
+
 			// Draw stats
 			//GameEngine::gEngine.FrameTexture.setView(GameEngine::gEngine.FrameTexture.getDefaultView());
 			//GameEngine::gEngine.FrameTexture.draw(game.GetPlayer().GetStatsString());
 			//GameEngine::gEngine.FrameTexture.draw(game.GetTilegrid().GetTimeString());
 			//GameEngine::gEngine.FrameTexture.setView(GameView);
-			
+
 			GameEngine::gEngine.FrameTexture.setView(GameEngine::gEngine.FrameTexture.getDefaultView());
-			
+
 			fadebox.setFillColor(sf::Color(0,0,0, opa));
 			// Draw fadebox
 			GameEngine::gEngine.FrameTexture.draw(fadebox);
 			GameEngine::gEngine.FrameTexture.display();
-			
+
 			//GameEngine::gEngine.PostFxShader.setParameter("timer", GameEngine::gEngine.shaderClock.getElapsedTime().asSeconds()*100);
 			FrameSprite.setTexture(GameEngine::gEngine.FrameTexture.getTexture());
 			GameEngine::gEngine.App.draw(FrameSprite, &GameEngine::gEngine.PostFxShader);
 			GameEngine::gEngine.App.display();
-			
+
 			opa -= 600 * GameEngine::gEngine.GetFrameTime();
 		}
+		FirstEntry = false;
 		GameEngine::gEngine.FrameTexture.setView(GameView);
 	}
 	else
@@ -257,7 +262,7 @@ void GameState::Render()
 		game.GetTilegrid().Render(game.GetPlayer(), NearBorder);
 		GameEngine::gEngine.FrameTexture.draw(game.GetPlayer().GetAnimation());
 		GameEngine::gEngine.FrameTexture.display();
-		
+
 		//GameEngine::gEngine.PostFxShader.setParameter("timer", GameEngine::gEngine.shaderClock.getElapsedTime().asSeconds()*100);
 		GameEngine::gEngine.App.setView(GameEngine::gEngine.FrameTexture.getDefaultView());
 		FrameSprite.setTexture(GameEngine::gEngine.FrameTexture.getTexture());

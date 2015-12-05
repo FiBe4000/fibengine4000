@@ -9,17 +9,17 @@ GameEngine::GameEngine() : Running(false)
     App.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "gEngine", sf::Style::Fullscreen);
     App.setFramerateLimit(60);
     App.setVerticalSyncEnabled(true);
-    //App.ShowMouseCursor(false);
-    //App.SetSize(WINDOW_WIDTH*2, WINDOW_HEIGHT*2);
+    App.setMouseCursorVisible(false);
+
     if(!FrameTexture.create(WINDOW_WIDTH, WINDOW_HEIGHT))
     {
     	Stop();
     }
-    
+
     state = new IntroState();
     changeState = false;
     std::cerr << "Window set up" << std::endl;
-    
+
     shaderClock.restart();
     if(!sf::Shader::isAvailable())
 	{
@@ -29,7 +29,7 @@ GameEngine::GameEngine() : Running(false)
     {
     	Stop();
     }
-    PostFxShader.setParameter("tex", sf::Shader::CurrentTexture);   
+    PostFxShader.setParameter("tex", sf::Shader::CurrentTexture);
 }
 
 GameEngine::~GameEngine()
@@ -49,11 +49,26 @@ void GameEngine::Run()
     while(gEngine.Running)
     {
     	frameTime = frameClock.restart().asSeconds();
-    	
+
         if(changeState)
         {
-            state=NewState;
+            delete state;
             changeState=false;
+
+            switch(NewState)
+            {
+                case GAME_STATE:
+                    state = new GameState;
+                    break;
+
+                case MENU_STATE:
+                    state = new MenuState;
+                    break;
+
+                case INTRO_STATE:
+                    state = new IntroState;
+                    break;
+            }
         }
 
         state->Process();
@@ -67,10 +82,10 @@ void GameEngine::Stop()
     gEngine.Running=false;
 }
 
-void GameEngine::ChangeState(State* newState)
+void GameEngine::ChangeState(int newState)
 {
     changeState=true;
-    NewState=newState;
+    NewState = newState;
 }
 
 float GameEngine::GetFrameTime()

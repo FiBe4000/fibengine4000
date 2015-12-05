@@ -39,12 +39,13 @@ private:
      \brief A bool used for checking whether a new level should be loaded or not.
     */
     bool IsNewLevel;
-	
+
 	/*!
 	 \brief A bool used for checking whether the player is dead or not.
 	*/
 	bool IsPlayerDead;
 	bool Paused;
+	bool FirstEntry;
 public:
     /*!
      \brief The constructor.
@@ -76,8 +77,8 @@ public:
      \return The game object.
     */
     //Game& GetGame() { return game; }
-    
-    std::string p() { return "GameState"; } 
+
+    std::string p() { return "GameState"; }
 };
 
 #endif // GAMESTATE_H_INCLUDED

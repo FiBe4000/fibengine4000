@@ -10,19 +10,19 @@ State::~State()
 }
 
 void State::Process()
-{	
+{
     GameEngine::gEngine.App.pollEvent(event);
-	
+
 	static bool OldEscKeyDown = false;
     static bool OldF1KeyDown = false;
     static bool OldF2KeyDown = false;
     static bool OldF3KeyDown = false;
-	
+
     bool EscKeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
     bool F1KeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::F1);
     bool F2KeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::F2);
     bool F3KeyDown = sf::Keyboard::isKeyPressed(sf::Keyboard::F3);
-    
+
     if(event.type == sf::Event::Closed)
     {
         GameEngine::Stop();
@@ -33,20 +33,17 @@ void State::Process()
     }
     if((F1KeyDown && !OldF1KeyDown) || GStateReq)
     {
-        State* NewState = new GameState();
-        GameEngine::gEngine.ChangeState(NewState);
+        GameEngine::gEngine.ChangeState(GAME_STATE);
     	GStateReq = false;
     }
     if(F2KeyDown && !OldF2KeyDown || MStateReq)
     {
-        State* NewState=new MenuState();
-        GameEngine::gEngine.ChangeState(NewState);
+        GameEngine::gEngine.ChangeState(MENU_STATE);
         GStateReq = false;
     }
     if((F3KeyDown && !OldF3KeyDown) || IStateReq)
     {
-		State* NewState = new IntroState();
-		GameEngine::gEngine.ChangeState(NewState);
+		GameEngine::gEngine.ChangeState(INTRO_STATE);
     	IStateReq = false;
     }
 
@@ -73,14 +70,14 @@ void State::ReqStateChange(int state)
 		case GAME_STATE:
 			GStateReq = true;
 		break;
-		
+
 		case INTRO_STATE:
 			IStateReq = true;
 		break;
-		
+
 		case MENU_STATE:
 			MStateReq = true;
-		break;	
+		break;
 	}
 }
 

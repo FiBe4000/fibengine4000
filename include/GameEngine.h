@@ -37,7 +37,7 @@ private:
     /*!
      \brief A pointer to a new state.
     */
-    State* NewState;
+    int NewState;
 
     /*!
      \brief Is the game running?
@@ -48,9 +48,9 @@ private:
      \brief A bool to check whether the State should be changed or not.
     */
     bool changeState;
-    
+
     sf::Clock frameClock;
-	
+
 	float frameTime;
     /*!
      \brief This method is the main method used for running the game. It contains the main loop.
@@ -124,18 +124,18 @@ public:
      \brief This method is used to change the current State while running the game.
      \param newState: This pointer to State contains the address to the new State.
     */
-    void ChangeState(State* newState);
-	
+    void ChangeState(int newState);
+
 	float GetFrameTime();
-	
+
     /*!
      \brief Get the current State.
      \return The current State.
     */
     State& GetState() { return *state; }
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////int GetFrameTime() { return frameTime.getElapsedTime().asSeconds(); }
-	
+
     /*!
      \brief The window in which everything is drawn.
      \note While every class should be able to reach the window, through the static object gEngine, it is public.

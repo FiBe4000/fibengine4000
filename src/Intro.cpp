@@ -9,25 +9,25 @@ Intro::Intro() : isDone(false)
 	}
 	sprite.setTexture(texture);
 	sprite.setPosition(100, 100);
-	
+
 	if(!introFont.loadFromFile("data/ETHNOCEN.TTF"))
 	{
 		std::cerr << "Failed loading font" << std::endl;
 		GameEngine::Stop();
 	}
-	
-	introTxtString = "Test Test!";
+
+	introTxtString = "FiBe Games";
 	introTxt.setFont(introFont);
 	introTxt.setString(introTxtString);
 	introTxt.setPosition((GameEngine::WINDOW_WIDTH/2) - (introTxt.getCharacterSize() * introTxtString.length() / 2) + 40, GameEngine::WINDOW_HEIGHT/2 - 40);
 	introTxt.setScale(1,1);
-	
+
 	col = 0;
 	colDir = 3;
 	progress = 0;
-	
+
 	clk.restart();
-		
+
 	std::cerr << "Intro created" << std::endl;
 }
 
@@ -38,11 +38,11 @@ Intro::~Intro()
 void Intro::Update()
 {
 	introTxt.setColor(sf::Color(255, 255, 255, col));
-	
+
 	if(clk.getElapsedTime() >= sf::milliseconds(10))
 	{
 		col += colDir;
-	
+
 		if(col >= 255 || col <= 0)
 		{
 			colDir *= -1;
@@ -53,7 +53,7 @@ void Intro::Update()
 			std::cout << "INTRO DONE" << std::endl;
 			isDone = true;
 		}
-		
+
 		clk.restart();
 	}
 }
